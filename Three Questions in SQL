@@ -1,0 +1,45 @@
+CREATE DATABASE TR_RECORDS;
+USE TR_RECORDS;
+
+CREATE TABLE TRANSACTIONS(
+	TR_ID INT PRIMARY KEY,
+    CST_ID INT NOT NULL,
+    CST_NAME VARCHAR(30),
+    CST_LCN VARCHAR(50),
+    TR_AMT INT NOT NULL,
+    CST_BAL INT NOT NULL
+);
+
+INSERT INTO TRANSACTIONS
+(TR_ID, CST_ID, CST_NAME, CST_LCN, TR_AMT, CST_BAL)
+VALUES
+(101, 2201, "Aditya", "Meerut", 10000, 100000),
+(102, 2202, "Arjun",  "Vishakhapatnam",20000, 80000),
+(103, 2203, "Rahul",  "Srinagar", 12500, 200000),
+(104, 2204, "Amit",  "Srinagar", 32000, 210000),
+(105, 2205, "Vikram",  "Kolkata", 34500, 300000),
+(106, 2206, "Sanjay",  "Vishakhapatnam", 54000, 450000),
+(107, 2207, "Deepak",  "Vishakhapatnam", 13200, 320000),
+(108, 2208, "Sandeep",  "Meerut", 32000, 120000),
+(109, 2209, "Rohit",  "Vishakhapatnam", 78000, 677000),
+(110, 2210, "Karan",  "Srinagar", 65000, 782000);
+
+#Question1 - "Find the details (ID, Name, Location, and Balance) of the customer who holds the highest balance in each respective city."
+#Question2 - "Which city has the highest number of customers, and how many customers live there?"
+#Question3 - "Identify the location that generated the maximum total transaction volume. Display the location name along with its total transaction amount."
+
+SELECT * FROM TRANSACTIONS;
+
+SELECT * FROM TRANSACTIONS WHERE CST_LCN = "Meerut";
+SELECT * FROM TRANSACTIONS WHERE CST_LCN = "Vishakhapatnam";
+SELECT * FROM TRANSACTIONS WHERE CST_LCN = "Srinagar";
+SELECT * FROM TRANSACTIONS WHERE CST_LCN = "Kolkata";
+
+SELECT * FROM TRANSACTIONS;
+SELECT * FROM TRANSACTIONS ORDER BY CST_LCN;
+
+SELECT CST_ID, CST_NAME, CST_LCN, CST_BAL FROM TRANSACTIONS AS TR WHERE TR.CST_BAL IN (SELECT MAX(CST_BAL) FROM TRANSACTIONS WHERE TR.CST_LCN = CST_LCN);
+
+SELECT CST_LCN, COUNT(CST_LCN) FROM TRANSACTIONS GROUP BY CST_LCN ORDER BY COUNT(CST_LCN) DESC LIMIT 1;
+
+SELECT CST_LCN, SUM(TR_AMT) FROM TRANSACTIONS GROUP BY CST_LCN ORDER BY SUM(TR_AMT) DESC LIMIT 1;
